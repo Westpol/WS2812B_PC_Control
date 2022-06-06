@@ -7,6 +7,7 @@ CRGB leds[NUM_LEDS];
 int r = 0;
 int g = 0;
 int b = 0;
+int rgbb = 0;
 
 String vnow = "";
 
@@ -67,7 +68,23 @@ void loop() {
   }
 
   vnow = "";
+  index++;
 
+  while(true){
+    if(!isAlphaNumeric(input[index])){
+      rgbb = vnow.toInt();
+      break;
+    }
+    vnow += input[index];
+    index++;
+    if(index > il){
+      return;
+    }
+  }
+  vnow = "";
+
+
+  FastLED.setBrightness(rgbb);
   for(int i = 0; i<NUM_LEDS;i++){
     leds[i].setRGB(r, g, b);
   }
