@@ -15,6 +15,7 @@ led_value_b = [0]*num_leds
 addition = 0
 hsteps = 7
 vsteps = 10
+startup = True
 
 width, height = get_monitors()[0].width, get_monitors()[0].height
 
@@ -39,12 +40,18 @@ while 1:
     sent = ""
     for l in range(num_leds_right):
         sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "r", 'utf-8'))
-    sent = ""
     for l in reversed(range(num_leds_right, num_leds_top + num_leds_right)):
         sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "&", 'utf-8'))
+    if startup:
+        for d in range(5):
+            arduino.write(bytes(sent + "&", 'utf-8'))
+            time.sleep(0.1)
+        startup = False
+    else:
+        arduino.write(bytes(sent + "&", 'utf-8'))
+    while arduino.readline() != b'done\r\n':
+        pass
     led_value_r = [0]*num_leds
     led_value_g = [0]*num_leds
     led_value_b = [0]*num_leds
-    print(time.time() - timme)
+    print("Current FPS: " + str(1/(time.time() - timme)))

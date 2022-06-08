@@ -18,13 +18,12 @@ void setup() {
 
 void loop() {
   while(!Serial.available());
-  Serial.readStringUntil('&');
-  String input = Serial.readStringUntil('r');
+  String input = Serial.readStringUntil('&');
   input = String(input);
   int index = 0;
   int il = input.length();
 
-  for(int i = 0; i < 21; i++){
+  for(int i = 0; i < NUM_LEDS; i++){
     while(true){
       if(!isAlphaNumeric(input[index])){
         r[i] = vnow.toInt();
@@ -75,9 +74,10 @@ void loop() {
     leds[i].setRGB(r[i], g[i], b[i]);
   }
   FastLED.show();
+  Serial.println("done");
 
 
-
+/*
   while(!Serial.available());
   Serial.readStringUntil('r');
   input = Serial.readStringUntil('&');
@@ -135,7 +135,7 @@ void loop() {
   for(int i = 0; i<NUM_LEDS;i++){
     leds[i].setRGB(r[i], g[i], b[i]);
   }
-  FastLED.show();
+  FastLED.show();*/
 }
 
 void serialFlush(){
