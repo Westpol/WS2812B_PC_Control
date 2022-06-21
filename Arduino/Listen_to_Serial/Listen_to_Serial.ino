@@ -15,6 +15,8 @@ void setup() {
   Serial.begin(115200);
   Serial.setTimeout(5);
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
+  pinMode(10, OUTPUT);
+  digitalWrite(10, LOW);
 }
 
 void loop() {

@@ -12,19 +12,18 @@ num_leds_left = 21
 num_leds = 57
 timme = 0
 maxVal = 0
-half_sec = 0
+smoothing = 0
+factor = 4
 
 
 def send_vals(noise):
-    global timme, maxVal, half_sec
-    if time.time() >= half_sec:
-        maxVal -= 1
-        half_sec = time.time() + .1
-    if int(noise * 10) > maxVal:
-        maxVal = int(noise * 10)
+    global timme, maxVal, smoothing
+
+    maxVal -= 1 * ((time.time() - smoothing) / .04)
+    smoothing = time.time()
+    if noise * factor > maxVal:
+        maxVal = noise * factor
     arduino.write(bytes(str(maxVal) + "$", 'utf_8'))
-    print("Current FPS: " + str(1/(time.time() - timme)))
-    timme = time.time()
 
 
 def audio_callback(indata, frames, time, status):
