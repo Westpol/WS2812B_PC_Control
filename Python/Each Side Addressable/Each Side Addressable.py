@@ -83,7 +83,7 @@ while 1:
     arduino.write(bytes(sent + "g", 'utf-8'))
     while arduino.readline() != b'd\r\n':
         pass
-    led_value_r = [0] * num_leds
-    led_value_g = [100] * num_leds
-    led_value_b = [0] * num_leds
+    led_value_r = [255] * num_leds
+    led_value_g = [255] * num_leds
+    led_value_b = [255] * num_leds
     print("Current FPS: " + str(1 / (time.time() - timme)))
