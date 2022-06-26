@@ -44,7 +44,6 @@ while 1:
     for l in range(0, 10):
         sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
     arduino.write(bytes(sent + "a", 'utf-8'))
-    print(arduino.readline())
     while arduino.readline() != b'a\r\n':
         pass
     sent = ""

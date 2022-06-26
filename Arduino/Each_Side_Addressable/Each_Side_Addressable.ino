@@ -76,6 +76,7 @@ void loop() {
       }
 
       vnow = "";
+      index++;
     }
     ledCount += 10;
     if(ledCount == 80){

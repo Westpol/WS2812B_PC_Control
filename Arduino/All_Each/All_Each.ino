@@ -9,14 +9,13 @@ int g[NUM_LEDS];
 int b[NUM_LEDS];
 
 String vnow = "";
-char alphabet[] = "ab";
+char alphabet[] = "abcdefg";
+char checkchar[] = "$";
+int alNum = 0;
+int index = 0;
+int j = 0;
 
 void setup() {
-  for(int i = 67; i < 78; i++){
-    r[i] = 255;
-    g[i] = 255;
-    b[i] = 255;
-  }
   Serial.begin(115200);
   Serial.setTimeout(100);
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -27,17 +26,19 @@ void setup() {
 }
 
 void loop() {
+  j = 0;
+  for(int k = 0; k < 7; k++){
     while(!Serial.available());
-    String input = Serial.readStringUntil(alphabet[0]);
+    String input = Serial.readStringUntil(alphabet[k]);
     input = String(input);
-    int index = 0;
+    index = 0;
     int il = input.length();
-    Serial.println(il);
+
 
     for(int i = 0; i < 10;i++){
       while(true){
         if(!isAlphaNumeric(input[index])){
-          r[i] = vnow.toInt();
+          r[j] = vnow.toInt();
           break;
         }
         vnow += input[index];
@@ -52,7 +53,7 @@ void loop() {
 
       while(true){
         if(!isAlphaNumeric(input[index])){
-          g[i] = vnow.toInt();
+          g[j] = vnow.toInt();
           break;
         }
         vnow += input[index];
@@ -67,7 +68,7 @@ void loop() {
 
       while(true){
         if(!isAlphaNumeric(input[index])){
-          b[i] = vnow.toInt();
+          b[j] = vnow.toInt();
           break;
         }
         vnow += input[index];
@@ -78,11 +79,17 @@ void loop() {
       }
 
       vnow = "";
+      index++;
+      j++;
     }
+    Serial.println(alphabet[k]);
+  }
+
 
   for(int i = 0; i<NUM_LEDS;i++){
     leds[i].setRGB(r[i], g[i], b[i]);
   }
   FastLED.show();
-  Serial.println(alphabet[0]);
+  delay(5);
+  Serial.println("l");
 }
