@@ -11,8 +11,8 @@ num_leds_top = 36
 num_leds_left = 21
 
 addition = 0
-hsteps = 7
-vsteps = 10
+hsteps = 5
+vsteps = 5
 hdist = 100
 vdist = 100
 
@@ -43,7 +43,7 @@ while 1:
         led_value_b[f] /= addition
         addition = 0
 
-    for f in range(0, num_leds_right):
+    '''for f in range(0, num_leds_right):
         for i in range(width - vdist, width, vsteps):
             for k in range(int(height / num_leds_right) * (num_leds_right - (f + 1)), int(height / num_leds_right) * (num_leds_right - f), hsteps):
                 pixelVal = img.getpixel((i, k))
@@ -55,7 +55,7 @@ while 1:
         led_value_r[f] /= addition
         led_value_g[f] /= addition
         led_value_b[f] /= addition
-        addition = 0
+        addition = 0'''
 
     sent = ""
     for l in range(10):

@@ -10,20 +10,15 @@ int b[NUM_LEDS];
 
 String vnow = "";
 char alphabet[] = "abcdefg";
-char checkchar[] = "$";
-int alNum = 0;
 int index = 0;
 int j = 0;
 
 void setup() {
   Serial.begin(230400);
-  Serial.setTimeout(100);
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
-  FastLED.setBrightness(150);
   pinMode(10, OUTPUT);
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
   digitalWrite(10, HIGH);
+
 }
 
 void loop() {
@@ -34,7 +29,6 @@ void loop() {
     }
     String input = Serial.readStringUntil(alphabet[k]);
     index = 0;
-    int il = input.length();
 
     for(int i = 0; i < 10;i++){
       while(true){
@@ -44,9 +38,6 @@ void loop() {
         }
         vnow += input[index];
         index++;
-        if(index > il){
-          return;
-        }
       }
 
       vnow = "";
@@ -59,9 +50,6 @@ void loop() {
         }
         vnow += input[index];
         index++;
-        if(index > il){
-          return;
-        }
       }
 
       vnow = "";
@@ -74,9 +62,6 @@ void loop() {
         }
         vnow += input[index];
         index++;
-        if(index > il){
-          return;
-        }
       }
 
       vnow = "";
@@ -89,6 +74,7 @@ void loop() {
   for(int i = 0; i<NUM_LEDS;i++){
     leds[i].setRGB(r[i], g[i], b[i]);
   }
+  //FastLED.setBrightness(90);
   FastLED.show();
   while(!Serial.available()){
   Serial.println("l");
