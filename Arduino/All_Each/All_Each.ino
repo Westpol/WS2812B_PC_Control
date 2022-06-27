@@ -12,6 +12,7 @@ String vnow = "";
 char alphabet[] = "abcdefg";
 int index = 0;
 int j = 0;
+float brightness = 255;
 
 void setup() {
   Serial.begin(230400);
@@ -74,7 +75,7 @@ void loop() {
   for(int i = 0; i<NUM_LEDS;i++){
     leds[i].setRGB(r[i], g[i], b[i]);
   }
-  //FastLED.setBrightness(90);
+  FastLED.setBrightness(brightness);
   FastLED.show();
   while(!Serial.available()){
   Serial.println("l");
