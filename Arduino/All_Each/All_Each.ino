@@ -16,9 +16,10 @@ int index = 0;
 int j = 0;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(230400);
   Serial.setTimeout(100);
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
+  FastLED.setBrightness(150);
   pinMode(10, OUTPUT);
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
@@ -28,12 +29,12 @@ void setup() {
 void loop() {
   j = 0;
   for(int k = 0; k < 7; k++){
-    while(!Serial.available());
+    while(!Serial.available()){
+      Serial.println(alphabet[k - 1]);
+    }
     String input = Serial.readStringUntil(alphabet[k]);
-    input = String(input);
     index = 0;
     int il = input.length();
-
 
     for(int i = 0; i < 10;i++){
       while(true){
@@ -82,7 +83,6 @@ void loop() {
       index++;
       j++;
     }
-    Serial.println(alphabet[k]);
   }
 
 
@@ -90,6 +90,7 @@ void loop() {
     leds[i].setRGB(r[i], g[i], b[i]);
   }
   FastLED.show();
-  delay(5);
+  while(!Serial.available()){
   Serial.println("l");
+  }
 }
