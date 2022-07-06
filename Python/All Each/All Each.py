@@ -22,6 +22,8 @@ last_led_value_r = [0] * num_leds
 last_led_value_g = [0] * num_leds
 last_led_value_b = [0] * num_leds
 
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+
 time.sleep(2)
 
 while 1:
@@ -81,46 +83,13 @@ while 1:
         led_value_b[f] /= addition
         addition = 0'''
 
-    sent = ""
-    for l in range(10):
-        sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "a", 'utf-8'))
-    while arduino.readline() != b'a\r\n':
-        pass
-    sent = ""
-    for l in range(10, 20):
-        sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "b", 'utf-8'))
-    while arduino.readline() != b'b\r\n':
-        pass
-    sent = ""
-    for l in range(20, 30):
-        sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "c", 'utf-8'))
-    while arduino.readline() != b'c\r\n':
-        pass
-    sent = ""
-    for l in range(30, 40):
-        sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "d", 'utf-8'))
-    while arduino.readline() != b'd\r\n':
-        pass
-    sent = ""
-    for l in range(40, 50):
-        sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "e", 'utf-8'))
-    while arduino.readline() != b'e\r\n':
-        pass
-    sent = ""
-    for l in range(50, 60):
-        sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "f", 'utf-8'))
-    while arduino.readline() != b'f\r\n':
-        pass
-    sent = ""
-    for l in range(60, 70):
-        sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
-    arduino.write(bytes(sent + "g", 'utf-8'))
-    while arduino.readline() != b'l\r\n':
-        pass
+    for i in range(0, 7):
+        sent = ""
+        for l in range(i * 10, (i + 1) * 10):
+            sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
+        arduino.write(bytes(sent + alphabet[i], 'utf-8'))
+        while arduino.readline() != bytes(alphabet[i] + "\r\n", 'utf-8'):
+            if arduino.readline() == b'l\r\n':
+                break
+            pass
     print("Current FPS: {0}".format(1 / (time.time() - timme)))
