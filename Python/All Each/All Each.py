@@ -88,8 +88,9 @@ while 1:
         for l in range(i * 10, (i + 1) * 10):
             sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))
         arduino.write(bytes(sent + alphabet[i], 'utf-8'))
-        while arduino.readline() != bytes(alphabet[i] + "\r\n", 'utf-8'):
-            if arduino.readline() == b'l\r\n':
+        while 1:
+            serialIn = arduino.readline()
+            if serialIn == b'l\r\n' or serialIn == bytes(alphabet[i] + "\r\n", 'utf-8'):
+                print(serialIn)
                 break
-            pass
     print("Current FPS: {0}".format(1 / (time.time() - timme)))
