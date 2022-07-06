@@ -25,6 +25,7 @@ void setup() {
 void loop() {
   j = 0;
   for(int k = 0; k < 7; k++){
+    serialFlush();
     while(!Serial.available()){
       Serial.println(alphabet[k - 1]);
     }
@@ -79,5 +80,11 @@ void loop() {
   FastLED.show();
   while(!Serial.available()){
   Serial.println("l");
+  }
+}
+
+void serialFlush(){
+  while(Serial.available() > 0) {
+    char t = Serial.read();
   }
 }
