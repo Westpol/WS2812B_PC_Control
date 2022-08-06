@@ -20,6 +20,11 @@ void setup() {
   digitalWrite(25, HIGH);
   pinMode(0, OUTPUT);
   digitalWrite(0, HIGH);
+  startup();
+  while(!Serial.available()){
+    digitalWrite(0, LOW);
+  }
+  digitalWrite(0, HIGH);
 
 }
 
@@ -87,5 +92,46 @@ void loop() {
 void serialFlush(){
   while(Serial.available() > 0) {
     char t = Serial.read();
+  }
+}
+
+void startup(){
+  for(int f = 0; f < NUM_LEDS / 2; f++){
+    for(int i = 0; i < (NUM_LEDS / 2) - f; i++){
+      pixels.setPixelColor(i, pixels.Color(255, 255, 255));
+      pixels.setPixelColor(NUM_LEDS - i, pixels.Color(255, 255, 255));
+      if(i > 1){
+        pixels.setPixelColor(i - 1, pixels.Color(0, 0, 0));
+        pixels.setPixelColor(NUM_LEDS - (i - 1), pixels.Color(0, 0, 0));
+      }
+      pixels.show();
+      //delay(5);
+    }
+  }
+  delay(500);
+
+  for(int f = 0; f < 255; f++){
+    for(int i = 0; i < NUM_LEDS; i++){
+      pixels.setPixelColor(i, pixels.ColorHSV(i * (32768 / NUM_LEDS), f, 255));
+    }
+      pixels.show();
+  }
+
+  unsigned long timme = millis();
+  unsigned long k = 0;
+  while(timme + 10000 > millis()){
+    for(int i = 0; i < NUM_LEDS; i++){
+      pixels.setPixelColor(i, pixels.ColorHSV(i * (32768 / NUM_LEDS) + k, 255, 255));
+    }
+    pixels.show();
+    delay(20);
+    k += (32768 / NUM_LEDS);
+  }
+
+  for(int f = 255; f >= 0; f--){
+    for(int i = 0; i < NUM_LEDS; i++){
+      pixels.setPixelColor(i, pixels.ColorHSV(i * (32768 / NUM_LEDS)+ k, 255, f));
+    }
+      pixels.show();
   }
 }
