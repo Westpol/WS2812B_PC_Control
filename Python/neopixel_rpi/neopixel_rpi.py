@@ -5,7 +5,7 @@ import serial
 import math
 
 arduino = serial.Serial(port='COM16', baudrate=921600, timeout=.001)
-num_leds = 78
+num_leds = 80
 
 num_leds_right = 21
 num_leds_top = 36
@@ -96,7 +96,7 @@ while 1:
         addition = 0
     delay[2] = time.time()
 
-    for i in range(0, 7):
+    for i in range(0, 8):
         sent = ""
         for l in range(i * 10, (i + 1) * 10):
             sent += "{0}${1}${2}$".format(int(led_value_r[l]), int(led_value_g[l]), int(led_value_b[l]))

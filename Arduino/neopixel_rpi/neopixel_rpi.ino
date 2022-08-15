@@ -9,7 +9,7 @@ int g[NUM_LEDS];
 int b[NUM_LEDS];
 
 String vnow = "";
-char alphabet[] = "abcdefg";
+char alphabet[] = "abcdefghij";
 int j = 0;
 float brightness = 100;
 
@@ -30,7 +30,7 @@ void setup() {
 
 void loop() {
   j = 0;
-  for(int k = 0; k < 7; k++){
+  for(int k = 0; k < 8; k++){
     //serialFlush();
     while(!Serial.available()){
       Serial.println(alphabet[k - 1]);
