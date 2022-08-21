@@ -79,20 +79,21 @@ while 1:
         led_value_r[f], led_value_g[f], led_value_b[f] = correction(led_value_r[f], led_value_g[f], led_value_b[f])
         addition = 0
 
+    num_leds_upper = num_leds_right + num_leds_top + num_leds_left
     for f in range(0, num_leds_right):
         for i in range(0, vdist, vsteps):
             for k in range(int(height / num_leds_right) * (num_leds_right - (f + 1)),
                            int(height / num_leds_right) * (num_leds_right - f), hsteps):
                 pixelVal = img.getpixel((i, k))
-                led_value_r[(num_leds - 1) - f] += pixelVal[0]
-                led_value_g[(num_leds - 1) - f] += pixelVal[1]
-                led_value_b[(num_leds - 1) - f] += pixelVal[2]
+                led_value_r[(num_leds_upper - 1) - f] += pixelVal[0]
+                led_value_g[(num_leds_upper - 1) - f] += pixelVal[1]
+                led_value_b[(num_leds_upper - 1) - f] += pixelVal[2]
                 addition += 1
 
-        led_value_r[(num_leds - 1) - f] /= addition
-        led_value_g[(num_leds - 1) - f] /= addition
-        led_value_b[(num_leds - 1) - f] /= addition
-        led_value_r[(num_leds - 1) - f], led_value_g[(num_leds - 1) - f], led_value_b[(num_leds - 1) - f] = correction(led_value_r[(num_leds - 1) - f], led_value_g[(num_leds - 1) - f], led_value_b[(num_leds - 1) - f])
+        led_value_r[(num_leds_upper - 1) - f] /= addition
+        led_value_g[(num_leds_upper - 1) - f] /= addition
+        led_value_b[(num_leds_upper - 1) - f] /= addition
+        led_value_r[(num_leds_upper - 1) - f], led_value_g[(num_leds_upper - 1) - f], led_value_b[(num_leds_upper - 1) - f] = correction(led_value_r[(num_leds_upper - 1) - f], led_value_g[(num_leds_upper - 1) - f], led_value_b[(num_leds_upper - 1) - f])
         addition = 0
     delay[2] = time.time()
 
@@ -107,4 +108,4 @@ while 1:
                 break
     delay[3] = time.time()
     print(str(delay[1] - delay[0]) + "  ||  " + str(delay[2] - delay[1]) + "  ||  " + str(delay[3] - delay[2]))
-    #print("Current FPS: {0}".format(1 / (time.time() - timme)))
+    print("Current FPS: {0}".format(1 / (time.time() - timme)))
