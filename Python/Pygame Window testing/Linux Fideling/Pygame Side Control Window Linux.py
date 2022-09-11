@@ -8,6 +8,7 @@ expandedSize = 250
 width, height = 1920, 1080
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, 50)
 screen = pygame.display.set_mode((1, 200), pygame.NOFRAME)
+clock = pygame.time.Clock()
 
 screen.fill(backgroundColour)
 pygame.display.update()
@@ -18,6 +19,8 @@ windowState = False     # False = collapsed, True = expanded
 
 def expandWindow():
     global windowState, screen
+    while pygame.mouse.get_pressed(3)[0]:
+        pygame.event.pump()
     startTime = time.time()
     if not windowState:
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
@@ -45,6 +48,7 @@ def expandWindow():
 
 
 while 1:
+    clock.tick(30)
     pygame.event.pump()
     if pygame.mouse.get_pressed(3)[0] and not windowState:
         expandWindow()
