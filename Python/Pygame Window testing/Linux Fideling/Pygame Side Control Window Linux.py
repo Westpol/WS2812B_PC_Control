@@ -9,6 +9,8 @@ width, height = 1920, 1080
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, 50)
 screen = pygame.display.set_mode((1, 200), pygame.NOFRAME)
 clock = pygame.time.Clock()
+fps = 75
+windowFont = pygame.freetype.Font("Comic Sans MS", 10)
 
 screen.fill(backgroundColour)
 pygame.display.update()
@@ -48,7 +50,7 @@ def expandWindow():
 
 
 while 1:
-    clock.tick(30)
+    clock.tick(fps)
     pygame.event.pump()
     if pygame.mouse.get_pressed(3)[0] and not windowState:
         expandWindow()
@@ -58,5 +60,6 @@ while 1:
     if windowState:
         pygame.draw.rect(screen, (255, 50, 50), (expandedSize - 20, 0, expandedSize, 200))
         pygame.draw.polygon(screen, (255, 255, 255), ((expandedSize - 15, 100), (expandedSize - 5, 95), (expandedSize - 5, 105)))
+        screen.blit()
         pygame.display.flip()
     pygame.event.pump()
