@@ -31,7 +31,6 @@ void setup() {
 void loop() {
   j = 0;
   for(int k = 0; k < 8; k++){
-    //serialFlush();
     while(!Serial.available()){
       Serial.println(alphabet[k - 1]);
     }
@@ -89,12 +88,6 @@ void loop() {
   }
 }
 
-void serialFlush(){
-  while(Serial.available() > 0) {
-    char t = Serial.read();
-  }
-}
-
 void startup(){
   for(int f = 0; f < NUM_LEDS / 2; f++){
     for(int i = 0; i < (NUM_LEDS / 2) - f; i++){
@@ -105,7 +98,6 @@ void startup(){
         pixels.setPixelColor(NUM_LEDS - (i - 1), pixels.Color(0, 0, 0));
       }
       pixels.show();
-      //delay(5);
     }
   }
   delay(500);
